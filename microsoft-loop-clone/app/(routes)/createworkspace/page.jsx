@@ -5,11 +5,14 @@ import { SmilePlus } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import CoverPicker from "@/app/_components/CoverPicker"
+import EmojiPicker from "emoji-picker-react"
+import EmojiPickerComponent from "@/app/_components/EmojiPickerComponent"
 
 const CreateWorkspace = () => {
 
     const [coverImage, setCoverImage] = useState('/cover.png');
     const [workSpaceName, setWorkSpaceName] = useState();
+    const [emoji, setEmoji] = useState();
 
     return (
         <div className='p-10 md:px-36 lg:px-52 xl:px-96 py-28'>
@@ -37,9 +40,13 @@ const CreateWorkspace = () => {
                         You can always rename it later.
                     </h2>
                     <div className='mt-8 flex gap-2 items-center'>
-                        <Button variant="outline">
-                            <SmilePlus />
-                        </Button>
+                        <EmojiPickerComponent setEmojiIcon={(v) => setEmoji(v)}>
+                            <Button variant="outline">
+                                {emoji ? emoji :
+                                    <SmilePlus />}
+                            </Button>
+                        </EmojiPickerComponent>
+
                         <Input placeholder="Workspace Name"
                             onChange={(e) => setWorkSpaceName(e.target.value)} />
                     </div>
