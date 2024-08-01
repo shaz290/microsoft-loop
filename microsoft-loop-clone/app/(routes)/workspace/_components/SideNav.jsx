@@ -9,6 +9,12 @@ import DocumentList from './DocumentList'
 import uuid4 from 'uuid4'
 import { useUser } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
+import { Progress } from "@/components/ui/progress"
+import { toast } from 'sonner'
+
+
+const MAX_FILE = 5;
+
 
 const SideNav = ({ params }) => {
     const [documentList, setDocumentList] = useState([]);
@@ -40,8 +46,23 @@ const SideNav = ({ params }) => {
         return () => unsubscribe();
     };
 
+
+
     // Create New Document
     const CreateNewDocument = async () => {
+
+        if (documentList?.length >= MAX_FILE) {
+            toast("Upgrade to add new file.", {
+                description: "You reach max file,Please upgrade for unlimited file creation",
+                action: {
+                    label: "Upgrade",
+                    onClick: () => console.log("Undo"),
+                },
+            })
+
+            return;
+        }
+
         setLoading(true);
 
         const docId = uuid4();
@@ -54,6 +75,11 @@ const SideNav = ({ params }) => {
             documentName: 'Untitled Document',
             documentOutput: []
         });
+
+        await setDoc(doc(db, 'DocumentOutput', docId.toString()), {
+            docId: docId,
+            Output: []
+        })
 
         setLoading(false);
         router.replace('/workspace/' + params?.workspaceid + "/" + docId);
@@ -76,6 +102,15 @@ const SideNav = ({ params }) => {
             </div>
             {/* DocumentList */}
             <DocumentList documentList={documentList} params={params} />
+
+
+            {/* ProgressBar */}
+
+            <div className='absolute bottom-10 w-[85%]'>
+                <Progress value={(documentList?.length / MAX_FILE) * 100} />
+                <h2 className='text-sm font-light my-2'><strong>{documentList?.length}</strong> Out of <strong>{MAX_FILE}</strong> files used</h2>
+                <h2 className='text-sm font-light '>Upgrade your plan for unlimited access</h2>
+            </div>
         </div>
     );
 };
