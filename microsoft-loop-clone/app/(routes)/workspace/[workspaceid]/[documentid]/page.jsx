@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import SideNav from '../../_components/SideNav'
+import DocumentEditorSection from '../../_components/DocumentEditorSection'
 
 const Workspacedocument = ({ params }) => {
 
@@ -17,7 +18,7 @@ const Workspacedocument = ({ params }) => {
             </div>
             {/* Document */}
             <div className='md:ml-72'>
-                Document
+                <DocumentEditorSection params={params} />
             </div>
         </div>
     )
