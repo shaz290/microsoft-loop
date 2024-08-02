@@ -119,9 +119,10 @@ function RichDocumentEditor({ params }) {
         }
     }
     return (
-        <div className='lg:mml-40'>
-            <div id='editorjs'>
-
+        <div className=' '>
+            <div id='editorjs' className='w-[70%]'></div>
+            <div className='fixed bottom-10 sm:ml-20 md:ml-80 left-0 z-10'>
+                {/* <GenerateAITemplate setGenerateAIOutput={(output) => editor?.render(output)} /> */}
             </div>
         </div>
     )
