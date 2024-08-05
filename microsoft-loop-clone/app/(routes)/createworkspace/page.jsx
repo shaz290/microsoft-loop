@@ -59,6 +59,11 @@ function CreateWorkspace() {
         router.replace('/workspace/' + workspaceId + "/" + docId);
 
     }
+
+    const handleCancel = () => {
+        router.back(); // Go back to the previous page
+    };
+
     return (
         <div className='p-10 md:px-36 lg:px-64 xl:px-96 py-28'>
             <div className='shadow-2xl rounded-xl'>
@@ -96,7 +101,7 @@ function CreateWorkspace() {
                         <Button disabled={!workspaceName?.length || loading}
                             onClick={OnCreateWorkspace}
                         >Create {loading && <Loader2Icon className='animate-spin ml-2' />} </Button>
-                        <Button variant="outline">Cancel</Button>
+                        <Button variant="outline" onClick={handleCancel} disabled={loading}>Cancel</Button>
 
                     </div>
                 </div>

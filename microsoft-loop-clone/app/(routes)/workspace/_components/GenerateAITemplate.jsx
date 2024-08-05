@@ -49,11 +49,11 @@ function GenerateAITemplate({ setGenerateAIOutput }) {
                         <DialogDescription>
                             <div>
                                 <h2 className='mt-5'>What you want to write in document?</h2>
-                                <Input placeholder="Ex. Project Idea"
+                                <Input className='mt-3' placeholder="Ex. Project Idea"
                                     onChange={(event) => setUserInput(event?.target.value)}
                                 />
                                 <div className='mt-5 flex gap-5 justify-end'>
-                                    <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+                                    <Button variant="ghost" disabled={loading} onClick={() => setOpen(false)}>Cancel</Button>
                                     <Button variant=""
                                         disabled={!userInput || loading}
                                         onClick={() => GenerateFromAI()}>
