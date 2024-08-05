@@ -28,12 +28,12 @@ const SideNav = ({ params }) => {
         }
     }, [params]);
 
-    useEffect(() => {
-        if (documentList.length > 0) {
-            const firstDocument = documentList[0];
-            router.replace('/workspace/' + params?.workspaceid + "/" + firstDocument.id);
-        }
-    }, [documentList, params, router]);
+    // useEffect(() => {
+    //     if (documentList.length > 0) {
+    //         const firstDocument = documentList[0];
+    //         router.replace('/workspace/' + params?.workspaceid + "/" + firstDocument.id);
+    //     }
+    // }, [documentList, params, router]);
 
     // Fetch Document List
     const GetDocumentList = () => {
