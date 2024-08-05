@@ -13,21 +13,27 @@ import { Progress } from "@/components/ui/progress"
 import { toast } from 'sonner'
 import NotificationBox from './NotificationBox'
 
-
 const MAX_FILE = 5;
-
 
 const SideNav = ({ params }) => {
     const [documentList, setDocumentList] = useState([]);
     const router = useRouter();
     const { user } = useUser();
     const [loading, setLoading] = useState(false);
+    const [documentCount, setDocumentCount] = useState(0);
 
     useEffect(() => {
         if (params) {
             GetDocumentList();
         }
     }, [params]);
+
+    useEffect(() => {
+        if (documentList.length > 0) {
+            const firstDocument = documentList[0];
+            router.replace('/workspace/' + params?.workspaceid + "/" + firstDocument.id);
+        }
+    }, [documentList, params, router]);
 
     // Fetch Document List
     const GetDocumentList = () => {
@@ -38,20 +44,19 @@ const SideNav = ({ params }) => {
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             const documents = [];
             querySnapshot.forEach((doc) => {
-                documents.push(doc.data());
+                documents.push({ id: doc.id, ...doc.data() });
             });
             setDocumentList(documents);
+            setDocumentCount(querySnapshot.size);
+            console.log("count: " + querySnapshot.size);
         });
 
         // Cleanup subscription on unmount
         return () => unsubscribe();
     };
 
-
-
     // Create New Document
     const CreateNewDocument = async () => {
-
         if (documentList?.length >= MAX_FILE) {
             toast("Upgrade to add new file.", {
                 description: "You reach max file,Please upgrade for unlimited file creation",
@@ -60,7 +65,6 @@ const SideNav = ({ params }) => {
                     onClick: () => console.log("Undo"),
                 },
             })
-
             return;
         }
 
@@ -90,11 +94,11 @@ const SideNav = ({ params }) => {
         <div className='h-screen md:w-72 hidden md:block fixed bg-blue-50 p-5 shadow-md'>
             <div className='flex justify-between items-center'>
                 <Logo />
-                {/* <NotificationBox >
+                {/* <NotificationBox>
                     <Bell className='h-5 w-5 text-gray-400' />
                 </NotificationBox> */}
             </div>
-            <hr className='my-5'></hr>
+            <hr className='my-5' />
             <div>
                 <div className='flex justify-between items-center'>
                     <h2 className='font-medium'>Workspace Name</h2>
@@ -105,10 +109,7 @@ const SideNav = ({ params }) => {
             </div>
             {/* DocumentList */}
             <DocumentList documentList={documentList} params={params} />
-
-
             {/* ProgressBar */}
-
             <div className='absolute bottom-10 w-[85%]'>
                 <Progress value={(documentList?.length / MAX_FILE) * 100} />
                 <h2 className='text-sm font-light my-2'><strong>{documentList?.length}</strong> Out of <strong>{MAX_FILE}</strong> files used</h2>
