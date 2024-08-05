@@ -8,10 +8,11 @@ import { useAuth, useUser } from '@clerk/nextjs';
 import { doc, setDoc } from 'firebase/firestore';
 import { Loader2Icon, SmilePlus } from 'lucide-react';
 import Image from 'next/image'
-import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import { useRouter } from 'next/router';
 import uuid4 from 'uuid4';
 
+// lib/firebaseImports.js
 function CreateWorkspace() {
 
     const [coverImage, setCoverImage] = useState('/cover.png');
