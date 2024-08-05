@@ -90,9 +90,9 @@ const SideNav = ({ params }) => {
         <div className='h-screen md:w-72 hidden md:block fixed bg-blue-50 p-5 shadow-md'>
             <div className='flex justify-between items-center'>
                 <Logo />
-                <NotificationBox >
+                {/* <NotificationBox >
                     <Bell className='h-5 w-5 text-gray-400' />
-                </NotificationBox>
+                </NotificationBox> */}
             </div>
             <hr className='my-5'></hr>
             <div>
