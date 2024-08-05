@@ -9,7 +9,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { Loader2Icon, SmilePlus } from 'lucide-react';
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import uuid4 from 'uuid4';
 
 // lib/firebaseImports.js
