@@ -28,13 +28,6 @@ const SideNav = ({ params }) => {
         }
     }, [params]);
 
-    // useEffect(() => {
-    //     if (documentList.length > 0) {
-    //         const firstDocument = documentList[0];
-    //         router.replace('/workspace/' + params?.workspaceid + "/" + firstDocument.id);
-    //     }
-    // }, [documentList, params, router]);
-
     // Fetch Document List
     const GetDocumentList = () => {
         const q = query(collection(db, 'workspaceDocuments'),
@@ -48,7 +41,6 @@ const SideNav = ({ params }) => {
             });
             setDocumentList(documents);
             setDocumentCount(querySnapshot.size);
-            console.log("count: " + querySnapshot.size);
         });
 
         // Cleanup subscription on unmount
@@ -59,7 +51,7 @@ const SideNav = ({ params }) => {
     const CreateNewDocument = async () => {
         if (documentList?.length >= MAX_FILE) {
             toast("Upgrade to add new file.", {
-                description: "You reach max file,Please upgrade for unlimited file creation",
+                description: "You reach max file, Please upgrade for unlimited file creation",
                 action: {
                     label: "Upgrade",
                     onClick: () => console.log("Undo"),
@@ -68,7 +60,7 @@ const SideNav = ({ params }) => {
             return;
         }
 
-        setLoading(true);
+        setLoading(true); // Start loading state
 
         const docId = uuid4();
         await setDoc(doc(db, 'workspaceDocuments', docId.toString()), {
@@ -84,10 +76,10 @@ const SideNav = ({ params }) => {
         await setDoc(doc(db, 'DocumentOutput', docId.toString()), {
             docId: docId,
             Output: []
-        })
+        });
 
-        setLoading(false);
-        router.replace('/workspace/' + params?.workspaceid + "/" + docId);
+        await router.replace('/workspace/' + params?.workspaceid + "/" + docId);
+
     };
 
     return (
@@ -115,6 +107,13 @@ const SideNav = ({ params }) => {
                 <h2 className='text-sm font-light my-2'><strong>{documentList?.length}</strong> Out of <strong>{MAX_FILE}</strong> files used</h2>
                 <h2 className='text-sm font-light '>Upgrade your plan for unlimited access</h2>
             </div>
+
+            {/* Loading Overlay */}
+            {loading && (
+                <div className='fixed inset-0 bg-gray-700 bg-opacity-50 flex items-center justify-center z-50'>
+                    <LoaderCircle className='h-10 w-10 animate-spin text-white' />
+                </div>
+            )}
         </div>
     );
 };

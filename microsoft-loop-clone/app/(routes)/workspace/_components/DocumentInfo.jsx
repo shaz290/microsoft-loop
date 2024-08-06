@@ -56,6 +56,7 @@ const DocumentInfo = ({ params }) => {
                         <Image src={coverImage}
                             width={400} height={400}
                             className='w-full h-[200px] object-cover rounded-t-2xl'
+                            alt='cover image'
                         />
                     </div>
                 </div>

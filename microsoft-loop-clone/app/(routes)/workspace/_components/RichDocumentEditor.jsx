@@ -8,7 +8,6 @@ import Table from '@editorjs/table';
 import CodeTool from '@editorjs/code';
 import Tooltip from 'editorjs-tooltip';
 import Quote from '@editorjs/quote';
-import Warning from '@editorjs/warning';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '@/config/firebaseConfig';
 import { useUser } from '@clerk/nextjs';
