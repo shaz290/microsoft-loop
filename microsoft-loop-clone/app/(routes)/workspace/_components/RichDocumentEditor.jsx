@@ -13,6 +13,7 @@ import { db } from '@/config/firebaseConfig';
 import { useUser } from '@clerk/nextjs';
 import GenerateAITemplate from './GenerateAITemplate';
 
+
 function RichDocumentEditor({ params }) {
     const editorRef = useRef(null);
     const [editor, setEditor] = useState(null);
@@ -107,12 +108,14 @@ function RichDocumentEditor({ params }) {
     };
 
     return (
-        <div>
-            <div id="editorjs" className="w-[70%]"></div>
+        <div className="flex">
+            <div id="editorjs" className="flex-1 sm:w-[90%] md:w-[80%] lg:w-[75%] xl:w-[70%]"></div>
             <div className="fixed bottom-10 sm:ml-20 md:ml-80 left-0 z-10">
                 <GenerateAITemplate setGenerateAIOutput={(output) => editor?.render(output)} />
             </div>
         </div>
+
+
     );
 }
 
