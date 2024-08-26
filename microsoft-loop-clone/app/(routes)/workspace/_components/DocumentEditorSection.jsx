@@ -17,7 +17,7 @@ const DocumentEditorSection = ({ params }) => {
             <DocumentInfo params={params} />
             {/* Text Editor */}
             <div className='grid grid-cols-4'>
-                <div className='col-span-3'>
+                <div className='col-span-4'>
                     <RichDocumentEditor params={params} />
                 </div>
                 <div className='fixed right-5 bottom-5 '>
